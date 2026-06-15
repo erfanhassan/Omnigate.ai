@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniGate AI - Telemetry Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#headerGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 17L12 22L22 17" stroke="url(#headerGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 12L12 17L22 12" stroke="url(#headerGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00f2fe" />
+              <stop offset="100%" stop-color="#4facfe" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div>
+          <h1>OmniGate AI <span class="badge">LIVE TELEMETRY</span></h1>
+          <span style="font-size:0.7rem;color:var(--text-dim);font-weight:400;display:block;margin-top:0.1rem;">Privacy-First API Gateway &middot; Token Cost Tracker</span>
+        </div>
+      </div>
+      <div class="status-indicator">
+        <span class="pulse-dot"></span>
+        <span>Gateway Connected</span>
+      </div>
+    </header>
+
+    <!-- Glass Gauge Cluster -->
+    <div class="gauge-cluster">
+      
+      <!-- Token Volume Gauge -->
+      <div class="gauge-card">
+        <h3>Token Velocity</h3>
+        <div class="gauge-wrapper">
+          <svg class="gauge-svg" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="cyan-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f2fe" />
+                <stop offset="100%" stop-color="#4facfe" />
+              </linearGradient>
+            </defs>
+            <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
+            <circle class="gauge-value" id="tokens-gauge" cx="50" cy="50" r="45" stroke="url(#cyan-gradient)"></circle>
+          </svg>
+          <div class="gauge-center-text">
+            <span class="value" id="total-tokens">0</span>
+            <span class="unit">Total Tokens</span>
+          </div>
+        </div>
+        <div class="gauge-stats">
+          <div class="stat"><span class="label">IN</span> <span class="val" id="input-tokens">0</span></div>
+          <div class="stat"><span class="label">OUT</span> <span class="val" id="output-tokens">0</span></div>
+        </div>
+      </div>
+
+      <!-- Cost Gauge -->
+      <div class="gauge-card">
+        <h3>Estimated Spend</h3>
+        <div class="gauge-wrapper">
+          <svg class="gauge-svg" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="red-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff0844" />
+                <stop offset="100%" stop-color="#ffb199" />
+              </linearGradient>
+            </defs>
+            <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
+            <circle class="gauge-value" id="cost-gauge" cx="50" cy="50" r="45" stroke="url(#red-gradient)"></circle>
+          </svg>
+          <div class="gauge-center-text">
+            <span class="value" id="total-cost">$0.000</span>
+            <span class="unit">USD</span>
+          </div>
+        </div>
+        <div class="gauge-stats">
+          <div class="stat"><span class="label">AVG REQ</span> <span class="val" id="avg-cost">$0.000</span></div>
+        </div>
+      </div>
+
+      <!-- RPM Gauge -->
+      <div class="gauge-card">
+        <h3>Network RPM</h3>
+        <div class="gauge-wrapper">
+          <svg class="gauge-svg" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#c471ed" />
+                <stop offset="100%" stop-color="#f64f59" />
+              </linearGradient>
+            </defs>
+            <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
+            <circle class="gauge-value" id="rpm-gauge" cx="50" cy="50" r="45" stroke="url(#purple-gradient)"></circle>
+          </svg>
+          <div class="gauge-center-text">
+            <span class="value" id="rpm-value">0</span>
+            <span class="unit">Req / Min</span>
+          </div>
+        </div>
+        <div class="gauge-stats">
+          <div class="stat"><span class="label">TOTAL REQ</span> <span class="val" id="total-requests">0</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="main-content-grid">
+      
+      <!-- Configuration Panel -->
+      <div class="config-panel">
+        <div class="panel-header">
+          <h3>⚙️ Gateway Configuration</h3>
+        </div>
+        <form id="config-form" class="config-form">
+          <div class="form-group">
+            <label for="agencyGatewayKey">Gateway Secret Key</label>
+            <input type="text" id="agencyGatewayKey" name="agencyGatewayKey" placeholder="Enter proxy access key...">
+          </div>
+          
+          <div class="form-divider">OpenAI-Compatible Providers</div>
+          <div class="form-group">
+            <label for="openaiPreset">Provider Preset</label>
+            <select id="openaiPreset" name="openaiPreset">
+              <option value="https://api.openai.com/v1/chat/completions">OpenAI Official</option>
+              <option value="https://api.deepseek.com/v1/chat/completions">DeepSeek API</option>
+              <option value="https://generativelanguage.googleapis.com/v1beta/openai/chat/completions">Gemini API</option>
+              <option value="https://api.x.ai/v1/chat/completions">Grok (xAI)</option>
+              <option value="https://api.moonshot.cn/v1/chat/completions">Kimi (Moonshot)</option>
+              <option value="https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions">Qwen (DashScope)</option>
+              <option value="custom">Custom Endpoint...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="openaiApiUrl">API Endpoint URL</label>
+            <input type="text" id="openaiApiUrl" name="openaiApiUrl" placeholder="https://api.openai.com/v1/chat/completions">
+          </div>
+          <div class="form-group">
+            <label for="openaiApiKey">API Secret Key</label>
+            <input type="password" id="openaiApiKey" name="openaiApiKey" placeholder="Enter API key (leave blank to keep current)">
+          </div>
+
+          <div class="form-divider">Anthropic Provider</div>
+          <div class="form-group">
+            <label for="anthropicApiUrl">API Endpoint URL</label>
+            <input type="text" id="anthropicApiUrl" name="anthropicApiUrl" placeholder="https://api.anthropic.com/v1/messages">
+          </div>
+          <div class="form-group">
+            <label for="anthropicApiKey">API Secret Key</label>
+            <input type="password" id="anthropicApiKey" name="anthropicApiKey" placeholder="Enter API key (leave blank to keep current)">
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-save">Save Configurations</button>
+            <div id="config-status" class="config-status"></div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Feed / Data Grid -->
+      <div class="data-panel">
+        <div class="panel-header">
+          <h3>📡 Live Request Interceptions</h3>
+        </div>
+        <div class="table-wrapper">
+          <table class="telemetry-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Provider / Model</th>
+                <th>Project ID</th>
+                <th>User ID</th>
+                <th class="text-right">Input Tokens</th>
+                <th class="text-right">Output Tokens</th>
+                <th class="text-right">Est. Cost</th>
+              </tr>
+            </thead>
+            <tbody id="telemetry-tbody">
+              <!-- Rows injected by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

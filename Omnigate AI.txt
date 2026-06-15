@@ -1,0 +1,72 @@
+Product Requirement Document (PRD)
+Project: OmniGate AI (Enterprise AI Cost Gateway & Proxy)
+Document Version: 1.0
+Target Audience: Engineering Teams, AI Agencies, and B2B Development Shops
+1. Executive Summary & Product Goal
+1.1 Core Objective
+OmniGate AI is a self-hosted, privacy-first API gateway and proxy designed for software development agencies and enterprise teams building with Large Language Models (LLMs). The product solves the critical problem of "API Bill Shock"—unpredictable, skyrocketing AI costs caused by developer terminal tools (e.g., Claude Code), IDE extensions (e.g., Cursor, VS Code), and custom frontends that recursively send massive conversation histories and consume invisible "thinking/reasoning" tokens.
+1.2 Key Value Propositions
+Privacy-First Architecture: Self-hosted deployments mean sensitive codebases and client data never pass through a third-party SaaS infrastructure.
+Absolute Cost Transparency: Intercepts and logs precise, true token consumption (including hidden reasoning tokens) in real-time.
+Granular Governance: Allows agency administrators to set hard spending limits, track costs by project or developer, and prevent runaway automated agent loops.
+2. Problem Statement & Critical Roadblocks
+Through rigorous technical analysis, the following structural challenges have been identified and directly addressed in this specification:
+2.1 The Privacy Hurdle
+Agencies handling proprietary enterprise code or regulated data (e.g., healthcare, financial applications) will refuse to route API traffic through an external vendor's proxy.
+Solution: 100% decoupling of the data plane and the control plane. The proxy runs entirely within the client's network. Only metadata (token counts, timestamps, user IDs) is synchronized outwards.
+2.2 The "Invisible" Token Problem (Reasoning/Thinking)
+Modern tier-1 models (like OpenAI's o1/o3 or Anthropic's extended thinking models) do not expose thinking tokens inside the visible body of streamed text. Calculating costs by running a local tokenizer (like tiktoken) over raw text output will result in massive calculation deficits, causing the agency to underreport costs.
+Solution: Abandon localized text tokenization for streaming data. The gateway must modify incoming requests to force provider-side usage monitoring and extract the definitive billing token metadata directly from the final Server-Sent Events (SSE) payload chunks.
+3. Product Architecture & Technical Specifications
+  [ Developer Tool ] 
+  (VS Code, Claude Code, Terminal)
+         │
+         ▼ (Modified API Base URL)
+  ┌────────────────────────────────────────────────────────┐
+  │ CLIENT CLOUD INFRASTRUCTURE (Self-Hosted Docker)       │
+  │                                                        │
+  │   [ OmniGate Proxy Container ]                         │
+  │         │                                              │
+  │         ├─► 1. Modify Request & Forward Streaming  ────┼───► [ AI Provider API ]
+  │         │                                              │     (OpenAI, Anthropic)
+  │         └─► 2. Intercept Final SSE "Usage" Chunk        │
+  │                                                        │
+  └─────────────────────────┬──────────────────────────────┘
+                            │
+                            ▼ (Anonymized Telemetry Metadata Only)
+              [ Cloud Analytics Dashboard ]
+3.1 Core Proxy Service (Data Plane)
+Deployment Vector: Packaged exclusively as a lightweight Docker container (node:20-alpine) deployable via Docker Compose or Kubernetes on client infra.
+Multi-Provider Translation: Must support unified routing to major LLM providers:
+OpenAI (/v1/chat/completions)
+Anthropic (/v1/messages)
+Token Interception Protocol:
+For OpenAI Streams: The proxy must inspect incoming payloads and append/override "stream_options": {"include_usage": true}. The engine must actively listen for the final, non-text chunk containing the unified usage block.
+For Anthropic Streams: The engine must parse the message_start event for input tracking and compile the final message_delta/message_stop events to ensure output_tokens (inclusive of thinking blocks) are fully captured.
+3.2 Cloud Control Plane (SaaS Dashboard)
+Central Analytics Interface: A multi-tenant web platform where agency administrators log in to view charts, manage developer identities, and set budget thresholds.
+Telemetry Synchronization: The proxy container transmits single, lightweight, non-blocking telemetry payloads upon the completion of every successful API execution block.
+4. Functional Requirements
+4.1 Proxy & Security Configuration
+
+
+
+
+
+
+
+4.2 Tracking & Analytics
+
+4.3 Governance & Controls (B2B Features)
+
+5. Non-Functional Requirements (NFRs)
+Performance / Latency Overhead: The proxy stream evaluation loop must introduce less than 15ms of latency to the time-to-first-token (TTFT) and maintain zero perceptible drag during continuous token streaming.
+Resiliency: If connection drops occur between the self-hosted container and the centralized SaaS dashboard, the proxy must cache telemetry logs locally using an internal, ephemeral SQLite fallback mechanism and flush them once connectivity is restored. API traffic flowing to developers must never be blocked by external telemetry synchronization issues.
+6. Success Metrics & Future Milestones
+6.1 Phase 1 Success Metrics (MVP)
+Data Integrity: Zero discrepancy between the cost tracked on OmniGate and the end-of-month official bills generated by OpenAI/Anthropic.
+Infrastructure Churn: Less than 1% container crash frequency across diverse agency deployment environments.
+6.2 Future Enhancements (Phase 2 Roadmap)
+The Prompt Compressor: An intelligent token-reduction layer that scans prompt vectors within the proxy context and safely minifies data payloads to reduce active enterprise spend by 20–30% automatically.
+Semantic De-duplication: Internal caching of static context layers (like massive code files or dense system prompts) to prevent redundant upstream transmissions across adjacent development teams.
+Does this PRD provide the structural depth you need to begin technical execution, or would you like to expand the specifications on how the circuit breaker architecture detects runaway developer loops?

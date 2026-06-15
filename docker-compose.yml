@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: omnigate-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - AGENCY_GATEWAY_KEY=stub-agency-key-for-local-testing
+      - OPENAI_API_KEY=your-openai-api-key-stub
+      - ANTHROPIC_API_KEY=your-anthropic-api-key-stub
+    restart: unless-stopped
