@@ -78,7 +78,7 @@ function logTelemetry(metadata) {
 // ========================================================
 // Dashboard & Telemetry API Routes (Zero-Auth for Local View)
 // ========================================================
-app.use('/dashboard', express.static('public'));
+app.use('/dashboard', express.static(path.join(__dirname, 'public')));
 
 app.get('/api/telemetry', (req, res) => {
   res.json(telemetryHistory);
@@ -582,3 +582,5 @@ app.listen(PORT, () => {
   console.log(` Status: ACTIVE | Listening on Port: ${PORT}           `);
   console.log(`========================================================`);
 });
+
+// Trigger watcher reload

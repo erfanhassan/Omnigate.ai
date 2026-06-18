@@ -34,161 +34,331 @@
     </header>
 
     <!-- Glass Gauge Cluster -->
-    <div class="gauge-cluster">
-      
-      <!-- Token Volume Gauge -->
-      <div class="gauge-card">
-        <h3>Token Velocity</h3>
-        <div class="gauge-wrapper">
-          <svg class="gauge-svg" viewBox="0 0 100 100">
-            <defs>
-              <linearGradient id="cyan-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#00f2fe" />
-                <stop offset="100%" stop-color="#4facfe" />
-              </linearGradient>
-            </defs>
-            <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
-            <circle class="gauge-value" id="tokens-gauge" cx="50" cy="50" r="45" stroke="url(#cyan-gradient)"></circle>
-          </svg>
-          <div class="gauge-center-text">
-            <span class="value" id="total-tokens">0</span>
-            <span class="unit">Total Tokens</span>
-          </div>
-        </div>
-        <div class="gauge-stats">
-          <div class="stat"><span class="label">IN</span> <span class="val" id="input-tokens">0</span></div>
-          <div class="stat"><span class="label">OUT</span> <span class="val" id="output-tokens">0</span></div>
+    <div class="gauge-cluster-wrapper locked-section" id="gauge-cluster-wrapper">
+      <div class="lock-overlay">
+        <div class="lock-card">
+          <span class="lock-icon">🔒</span>
+          <h4>Telemetry Locked</h4>
+          <p>Enter your Gateway Secret Key in the configuration panel to unlock live metrics.</p>
         </div>
       </div>
-
-      <!-- Cost Gauge -->
-      <div class="gauge-card">
-        <h3>Estimated Spend</h3>
-        <div class="gauge-wrapper">
-          <svg class="gauge-svg" viewBox="0 0 100 100">
-            <defs>
-              <linearGradient id="red-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ff0844" />
-                <stop offset="100%" stop-color="#ffb199" />
-              </linearGradient>
-            </defs>
-            <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
-            <circle class="gauge-value" id="cost-gauge" cx="50" cy="50" r="45" stroke="url(#red-gradient)"></circle>
-          </svg>
-          <div class="gauge-center-text">
-            <span class="value" id="total-cost">$0.000</span>
-            <span class="unit">USD</span>
+      <div class="gauge-cluster">
+        
+        <!-- Token Volume Gauge -->
+        <div class="gauge-card">
+          <h3>Token Velocity</h3>
+          <div class="gauge-wrapper">
+            <svg class="gauge-svg" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="cyan-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00f2fe" />
+                  <stop offset="100%" stop-color="#4facfe" />
+                </linearGradient>
+              </defs>
+              <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
+              <circle class="gauge-value" id="tokens-gauge" cx="50" cy="50" r="45" stroke="url(#cyan-gradient)"></circle>
+            </svg>
+            <div class="gauge-center-text">
+              <span class="value" id="total-tokens">0</span>
+              <span class="unit">Total Tokens</span>
+            </div>
+          </div>
+          <div class="gauge-stats">
+            <div class="stat"><span class="label">IN</span> <span class="val" id="input-tokens">0</span></div>
+            <div class="stat"><span class="label">OUT</span> <span class="val" id="output-tokens">0</span></div>
           </div>
         </div>
-        <div class="gauge-stats">
-          <div class="stat"><span class="label">AVG REQ</span> <span class="val" id="avg-cost">$0.000</span></div>
-        </div>
-      </div>
 
-      <!-- RPM Gauge -->
-      <div class="gauge-card">
-        <h3>Network RPM</h3>
-        <div class="gauge-wrapper">
-          <svg class="gauge-svg" viewBox="0 0 100 100">
-            <defs>
-              <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#c471ed" />
-                <stop offset="100%" stop-color="#f64f59" />
-              </linearGradient>
-            </defs>
-            <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
-            <circle class="gauge-value" id="rpm-gauge" cx="50" cy="50" r="45" stroke="url(#purple-gradient)"></circle>
-          </svg>
-          <div class="gauge-center-text">
-            <span class="value" id="rpm-value">0</span>
-            <span class="unit">Req / Min</span>
+        <!-- Cost Gauge -->
+        <div class="gauge-card">
+          <h3>Estimated Spend</h3>
+          <div class="gauge-wrapper">
+            <svg class="gauge-svg" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="red-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ff0844" />
+                  <stop offset="100%" stop-color="#ffb199" />
+                </linearGradient>
+              </defs>
+              <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
+              <circle class="gauge-value" id="cost-gauge" cx="50" cy="50" r="45" stroke="url(#red-gradient)"></circle>
+            </svg>
+            <div class="gauge-center-text">
+              <span class="value" id="total-cost">$0.000</span>
+              <span class="unit">USD</span>
+            </div>
+          </div>
+          <div class="gauge-stats">
+            <div class="stat"><span class="label">AVG REQ</span> <span class="val" id="avg-cost">$0.000</span></div>
           </div>
         </div>
-        <div class="gauge-stats">
-          <div class="stat"><span class="label">TOTAL REQ</span> <span class="val" id="total-requests">0</span></div>
-        </div>
-      </div>
 
+        <!-- RPM Gauge -->
+        <div class="gauge-card">
+          <h3>Network RPM</h3>
+          <div class="gauge-wrapper">
+            <svg class="gauge-svg" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#c471ed" />
+                  <stop offset="100%" stop-color="#f64f59" />
+                </linearGradient>
+              </defs>
+              <circle class="gauge-bg" cx="50" cy="50" r="45"></circle>
+              <circle class="gauge-value" id="rpm-gauge" cx="50" cy="50" r="45" stroke="url(#purple-gradient)"></circle>
+            </svg>
+            <div class="gauge-center-text">
+              <span class="value" id="rpm-value">0</span>
+              <span class="unit">Req / Min</span>
+            </div>
+          </div>
+          <div class="gauge-stats">
+            <div class="stat"><span class="label">TOTAL REQ</span> <span class="val" id="total-requests">0</span></div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- Main Content Grid -->
     <div class="main-content-grid">
       
-      <!-- Configuration Panel -->
+      <!-- Control Panel (Config, Onboarding, Features) -->
       <div class="config-panel">
-        <div class="panel-header">
-          <h3>⚙️ Gateway Configuration</h3>
+        <div class="tabs-header">
+          <button class="tab-btn active" data-tab="config">⚙️ Configuration</button>
+          <button class="tab-btn" data-tab="onboarding">📖 Setup Guide</button>
+          <button class="tab-btn" data-tab="features">✨ Features Info</button>
         </div>
-        <form id="config-form" class="config-form">
-          <div class="form-group">
-            <label for="agencyGatewayKey">Gateway Secret Key</label>
-            <input type="text" id="agencyGatewayKey" name="agencyGatewayKey" placeholder="Enter proxy access key...">
-          </div>
-          
-          <div class="form-divider">OpenAI-Compatible Providers</div>
-          <div class="form-group">
-            <label for="openaiPreset">Provider Preset</label>
-            <select id="openaiPreset" name="openaiPreset">
-              <option value="https://api.openai.com/v1/chat/completions">OpenAI Official</option>
-              <option value="https://api.deepseek.com/v1/chat/completions">DeepSeek API</option>
-              <option value="https://generativelanguage.googleapis.com/v1beta/openai/chat/completions">Gemini API</option>
-              <option value="https://api.x.ai/v1/chat/completions">Grok (xAI)</option>
-              <option value="https://api.moonshot.cn/v1/chat/completions">Kimi (Moonshot)</option>
-              <option value="https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions">Qwen (DashScope)</option>
-              <option value="custom">Custom Endpoint...</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="openaiApiUrl">API Endpoint URL</label>
-            <input type="text" id="openaiApiUrl" name="openaiApiUrl" placeholder="https://api.openai.com/v1/chat/completions">
-          </div>
-          <div class="form-group">
-            <label for="openaiApiKey">API Secret Key</label>
-            <input type="password" id="openaiApiKey" name="openaiApiKey" placeholder="Enter API key (leave blank to keep current)">
-          </div>
+        
+        <!-- Tab 1: Configuration -->
+        <div id="tab-config" class="tab-content active">
+          <form id="config-form" class="config-form">
+            <div class="form-group">
+              <label for="agencyGatewayKey">Gateway Secret Key</label>
+              <input type="text" id="agencyGatewayKey" name="agencyGatewayKey" placeholder="Enter proxy access key...">
+            </div>
+            
+            <div class="form-divider">OpenAI-Compatible Providers</div>
+            <div class="form-group">
+              <label for="openaiPreset">Provider Preset</label>
+              <select id="openaiPreset" name="openaiPreset">
+                <option value="https://api.openai.com/v1/chat/completions">OpenAI Official</option>
+                <option value="https://api.deepseek.com/v1/chat/completions">DeepSeek API</option>
+                <option value="https://generativelanguage.googleapis.com/v1beta/openai/chat/completions">Gemini API</option>
+                <option value="https://api.x.ai/v1/chat/completions">Grok (xAI)</option>
+                <option value="custom">Custom Endpoint...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="openaiApiUrl">API Endpoint URL</label>
+              <input type="text" id="openaiApiUrl" name="openaiApiUrl" placeholder="https://api.openai.com/v1/chat/completions">
+            </div>
+            <div class="form-group">
+              <label for="openaiApiKey">API Secret Key</label>
+              <input type="password" id="openaiApiKey" name="openaiApiKey" placeholder="Enter API key (leave blank to keep current)">
+            </div>
 
-          <div class="form-divider">Anthropic Provider</div>
-          <div class="form-group">
-            <label for="anthropicApiUrl">API Endpoint URL</label>
-            <input type="text" id="anthropicApiUrl" name="anthropicApiUrl" placeholder="https://api.anthropic.com/v1/messages">
-          </div>
-          <div class="form-group">
-            <label for="anthropicApiKey">API Secret Key</label>
-            <input type="password" id="anthropicApiKey" name="anthropicApiKey" placeholder="Enter API key (leave blank to keep current)">
-          </div>
+            <div class="form-divider">Anthropic Provider</div>
+            <div class="form-group">
+              <label for="anthropicApiUrl">API Endpoint URL</label>
+              <input type="text" id="anthropicApiUrl" name="anthropicApiUrl" placeholder="https://api.anthropic.com/v1/messages">
+            </div>
+            <div class="form-group">
+              <label for="anthropicApiKey">API Secret Key</label>
+              <input type="password" id="anthropicApiKey" name="anthropicApiKey" placeholder="Enter API key (leave blank to keep current)">
+            </div>
 
-          <div class="form-actions">
-            <button type="submit" class="btn-save">Save Configurations</button>
-            <div id="config-status" class="config-status"></div>
+            <div class="form-actions">
+              <button type="submit" class="btn-save">Save Configurations</button>
+              <div id="config-status" class="config-status"></div>
+            </div>
+          </form>
+        </div>
+        
+        <!-- Tab 2: Onboarding Setup Guide -->
+        <div id="tab-onboarding" class="tab-content">
+          <div class="onboarding-guide">
+            <div class="onboarding-section">
+              <h4>1. Send raw request via CLI (curl)</h4>
+              <p>Test the proxy from any terminal, compiler, or shell environment:</p>
+              <div class="code-container">
+                <button class="copy-btn" onclick="copySnippet('curl-code', this)">Copy</button>
+                <pre id="curl-code">curl -X POST http://localhost:8080/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "X-Gateway-Key: stub-agency-key-for-local-testing" \
+  -H "X-Gateway-User-ID: developer-erfan" \
+  -H "X-Gateway-Project-ID: local-test-v1" \
+  -d '{
+    "model": "deepseek-v4-pro",
+    "messages": [{"role": "user", "content": "Say Hello!"}],
+    "stream": true
+  }'</pre>
+              </div>
+            </div>
+
+            <div class="onboarding-section">
+              <h4>2. VS Code (Continue Extension)</h4>
+              <p>Add this model block to your <code>~/.continue/config.yaml</code> config file:</p>
+              <div class="code-container">
+                <button class="copy-btn" onclick="copySnippet('continue-code', this)">Copy</button>
+                <pre id="continue-code">models:
+  - name: DeepSeek (via OmniGate)
+    provider: openai
+    model: deepseek-v4-pro
+    apiBase: http://localhost:8080/v1/
+    apiKey: stub-agency-key-for-local-testing
+    requestOptions:
+      headers:
+        X-Gateway-Key: stub-agency-key-for-local-testing
+        X-Gateway-User-ID: developer-erfan
+        X-Gateway-Project-ID: vscode-project-omega</pre>
+              </div>
+            </div>
+
+            <div class="onboarding-section">
+              <h4>3. Roo Code or Cline</h4>
+              <p>Choose <b>OpenAI Compatible</b> provider, set Base URL to <code>http://localhost:8080/v1</code>, and add these custom headers in settings:</p>
+              <div class="code-container">
+                <button class="copy-btn" onclick="copySnippet('cline-code', this)">Copy</button>
+                <pre id="cline-code">{
+  "X-Gateway-Key": "stub-agency-key-for-local-testing",
+  "X-Gateway-User-ID": "developer-erfan",
+  "X-Gateway-Project-ID": "roo-code-evaluation"
+}</pre>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
+
+        <!-- Tab 3: Features Overview -->
+        <div id="tab-features" class="tab-content">
+          <div class="onboarding-guide">
+            <div class="onboarding-section">
+              <h4>🛠️ Dashboard Features Guide</h4>
+              <ul class="features-list">
+                <li>
+                  <div><span class="feature-badge badge-gauge">Token Velocity</span></div>
+                  <p>Tracks your active token usage (Input vs Output) in real-time. Reflects changes immediately as requests stream through.</p>
+                </li>
+                <li>
+                  <div><span class="feature-badge badge-gauge">Estimated Spend</span></div>
+                  <p>Calculates cumulative costs based on official provider rates (per 1M tokens) to alert you before any bill shock occurs.</p>
+                </li>
+                <li>
+                  <div><span class="feature-badge badge-gauge">Network RPM</span></div>
+                  <p>Monitors Requests Per Minute. Crucial for detecting runaway agent loops or automated tool loops.</p>
+                </li>
+                <li>
+                  <div><span class="feature-badge badge-config">Gateway Config</span></div>
+                  <p>Allows saving custom endpoints (DeepSeek, OpenAI, Gemini) and keys. Settings are written directly to your self-hosted instance's disk.</p>
+                </li>
+                <li>
+                  <div><span class="feature-badge badge-table">Live Interceptions</span></div>
+                  <p>Displays an audit trail of incoming requests. Shows timestamp, model, project, user, and precise token costs.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
+
 
       <!-- Feed / Data Grid -->
-      <div class="data-panel">
-        <div class="panel-header">
-          <h3>📡 Live Request Interceptions</h3>
+      <div class="data-panel-wrapper locked-section" id="data-panel-wrapper">
+        <div class="lock-overlay">
+          <div class="lock-card">
+            <span class="lock-icon">🔒</span>
+            <h4>Audit Log Locked</h4>
+            <p>Enter your Gateway Secret Key in the configuration panel to unlock live request interceptions.</p>
+          </div>
         </div>
-        <div class="table-wrapper">
-          <table class="telemetry-table">
-            <thead>
-              <tr>
-                <th>Timestamp</th>
-                <th>Provider / Model</th>
-                <th>Project ID</th>
-                <th>User ID</th>
-                <th class="text-right">Input Tokens</th>
-                <th class="text-right">Output Tokens</th>
-                <th class="text-right">Est. Cost</th>
-              </tr>
-            </thead>
-            <tbody id="telemetry-tbody">
-              <!-- Rows injected by app.js -->
-            </tbody>
-          </table>
+        <div class="data-panel">
+          <div class="panel-header">
+            <h3>📡 Live Request Interceptions</h3>
+          </div>
+          <div class="table-wrapper">
+            <table class="telemetry-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Provider / Model</th>
+                  <th>Project ID</th>
+                  <th>User ID</th>
+                  <th class="text-right">Input Tokens</th>
+                  <th class="text-right">Output Tokens</th>
+                  <th class="text-right">Est. Cost</th>
+                </tr>
+              </thead>
+              <tbody id="telemetry-tbody">
+                <!-- Rows injected by app.js -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
+    </div>
+  </div>
+  <!-- Onboarding Modal Overlay -->
+  <div id="onboarding-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Welcome to OmniGate AI</h2>
+        <div class="step-indicator">
+          <span class="step-dot active" data-step="1"></span>
+          <span class="step-dot" data-step="2"></span>
+          <span class="step-dot" data-step="3"></span>
+        </div>
+      </div>
+      
+      <div class="modal-body">
+        <!-- Step 1: Overview -->
+        <div class="wizard-step active" id="step-1">
+          <h3>Your Privacy-First API Gateway</h3>
+          <p>OmniGate AI is a high-performance proxy that intercepts, logs, and routes your LLM API requests.</p>
+          <ul class="features-list" style="margin-top: 1.5rem;">
+             <li><div><span class="feature-badge badge-gauge">Track Costs</span></div><p>See exactly how much you spend in real time.</p></li>
+             <li><div><span class="feature-badge badge-table">Audit Logs</span></div><p>View all intercepted requests and responses locally.</p></li>
+             <li><div><span class="feature-badge badge-config">Secure</span></div><p>Your API keys never leave your machine.</p></li>
+          </ul>
+        </div>
+
+        <!-- Step 2: Gateway Secret Key -->
+        <div class="wizard-step" id="step-2">
+          <h3>Secure Your Gateway</h3>
+          <p>To use OmniGate AI, you need to configure a <strong>Gateway Secret Key</strong>. This acts as a password for your local proxy, ensuring only your tools can route traffic through it.</p>
+          <div class="form-group" style="margin-top: 1.5rem;">
+            <label for="onboardingGatewayKey">Create or Enter your Gateway Secret Key</label>
+            <input type="text" id="onboardingGatewayKey" placeholder="e.g., my-secret-local-key-123" style="width: 100%; box-sizing: border-box; font-size: 1.1rem; padding: 0.75rem;">
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.5rem;">You will use this key in your code editors (VS Code, Roo Code) to authenticate with this dashboard.</p>
+          </div>
+        </div>
+
+        <!-- Step 3: Integration Guide -->
+        <div class="wizard-step" id="step-3">
+          <h3>Connect Your Tools</h3>
+          <p>Now that your key is set, update your AI coding assistants to route traffic to <code>http://localhost:8080/v1</code>.</p>
+          
+          <div class="onboarding-section" style="margin-top: 1rem;">
+            <h4 style="font-size: 0.9rem; color: var(--accent-cyan);">Roo Code / Cline</h4>
+            <p style="font-size: 0.85rem; color: var(--text-dim);">Set Provider to <b>OpenAI Compatible</b>, Base URL to <code>http://localhost:8080/v1</code>, and add Custom Headers:</p>
+            <div class="code-container" style="margin-top: 0.5rem;">
+              <pre style="font-size: 0.8rem; padding: 0.5rem;">{
+  "X-Gateway-Key": "<span id="preview-key">your-key</span>",
+  "X-Gateway-User-ID": "developer",
+  "X-Gateway-Project-ID": "my-project"
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button id="btn-prev" class="btn-secondary" style="visibility: hidden;">Back</button>
+        <button id="btn-next" class="btn-primary">Next</button>
+        <button id="btn-finish" class="btn-save hidden">Launch Dashboard</button>
+      </div>
     </div>
   </div>
 

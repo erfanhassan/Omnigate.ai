@@ -4,6 +4,9 @@
   "description": "Privacy-first, self-hosted LLM API Gateway and Proxy for tracking token usage.",
   "main": "server.js",
   "type": "module",
+  "bin": {
+    "omnigate": "./bin/omnigate.js"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js"

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniGate AI - Privacy-First LLM API Gateway</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-orbs"></div>
+  
+  <nav class="navbar">
+    <div class="container nav-content">
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#headerGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 17L12 22L22 17" stroke="url(#headerGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 12L12 17L22 12" stroke="url(#headerGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00f2fe" />
+              <stop offset="100%" stop-color="#4facfe" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="logo-text">OmniGate AI</span>
+      </div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it Works</a>
+        <a href="https://github.com/erfanhassan/Omnigate.ai" target="_blank" class="github-btn">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="badge-pill">v1.0.0 is Live 🚀</div>
+          <h1 class="hero-title">The Privacy-First<br><span class="gradient-text">LLM API Gateway</span></h1>
+          <p class="hero-subtitle">Self-hosted local proxy for AI agents and code editors. Track token usage in real-time, audit API requests, and never let your API keys leave your machine.</p>
+          
+          <div class="terminal-box">
+            <div class="terminal-header">
+              <div class="dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="terminal-title">bash</span>
+            </div>
+            <div class="terminal-body">
+              <span class="prompt">$</span> <span class="command">npx omnigate-ai</span>
+            </div>
+            <button class="copy-btn" onclick="copyCommand()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
+          <p class="install-hint">No installation required. Instantly starts a local server on port 8080.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features-section">
+      <div class="container">
+        <h2 class="section-title">Built for Developers & AI Agents</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon icon-cyan">🔒</div>
+            <h3>Local Privacy</h3>
+            <p>Your API keys (OpenAI, Anthropic) are stored locally on your machine. Tools like VS Code and Cursor only see your local proxy.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon icon-rose">💸</div>
+            <h3>Token & Cost Tracking</h3>
+            <p>Real-time visual gauges show you exactly how many tokens your agents are burning and calculates estimated costs instantly.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon icon-violet">📡</div>
+            <h3>Live Audit Logs</h3>
+            <p>Every request intercepted by the proxy is displayed in a beautiful, real-time dashboard so you can see exactly what your tools are sending.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="how-it-works-section">
+      <div class="container">
+        <div class="split-layout">
+          <div class="split-text">
+            <h2>Seamless Integration</h2>
+            <p>OmniGate AI is an OpenAI-compatible proxy. Simply tell your code editor or agent to point to your localhost, and we'll route it securely.</p>
+            <ul class="steps-list">
+              <li><strong>1.</strong> Run <code>npx omnigate-ai</code></li>
+              <li><strong>2.</strong> Open the Local Dashboard and configure your API keys.</li>
+              <li><strong>3.</strong> Update your tool's settings:
+                <div class="mini-code">
+                  <code>Base URL: http://localhost:8080/v1</code>
+                  <code>API Key: your-gateway-secret-key</code>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="split-image">
+            <div class="dashboard-preview-card">
+              <div class="dashboard-header-mock">
+                <span>Dashboard Preview</span>
+              </div>
+              <div class="dashboard-body-mock">
+                <div class="gauge-mock"></div>
+                <div class="gauge-mock"></div>
+                <div class="table-mock">
+                  <div class="row-mock"></div>
+                  <div class="row-mock"></div>
+                  <div class="row-mock"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 OmniGate AI. Built for the privacy-first developer.</p>
+    </div>
+  </footer>
+
+  <script>
+    function copyCommand() {
+      navigator.clipboard.writeText('npx omnigate-ai');
+      const btn = document.querySelector('.copy-btn');
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38ef7d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      setTimeout(() => {
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
