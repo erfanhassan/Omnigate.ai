@@ -1,6 +1,6 @@
 {
   "name": "omnigate-ai",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Privacy-first, self-hosted LLM API Gateway and Proxy for tracking token usage.",
   "main": "server.js",
   "type": "module",
