@@ -41,6 +41,30 @@ To route your AI coding assistant through OmniGate AI:
 
 Now, start coding! OmniGate AI will silently intercept the requests, inject your real API key, forward it to the provider, and track your tokens on the dashboard.
 
+## 🤖 Routing Your Custom AI Apps (Python & Node.js)
+
+Are you building your own AI apps? You can easily route them through OmniGate AI to track their token usage too! Just change the base URL in your official OpenAI SDK to point to your local proxy.
+
+**Python Example:**
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:8080/v1", # Point to your proxy
+    api_key="your-gateway-secret-key"    # Use your local secret
+)
+```
+
+**Node.js Example:**
+```javascript
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+    baseURL: "http://localhost:8080/v1", // Point to your proxy
+    apiKey: "your-gateway-secret-key"    // Use your local secret
+});
+```
+
 ## ✨ Features
 
 - **🔒 100% Local Privacy:** Your real API keys are saved locally. Cloud-based AI tools never see them.
