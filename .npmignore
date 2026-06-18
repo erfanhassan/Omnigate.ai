@@ -1,0 +1,7 @@
+docs/
+test-manual.js
+test-proxy.js
+preview-setup.js
+mock-upstream.js
+.git/
+config.json

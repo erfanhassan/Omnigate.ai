@@ -151,6 +151,40 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Stream parse error:", err);
       }
     };
+
+    evtSource.addEventListener('clear_telemetry', () => {
+      // Reset state
+      totalTokens = 0;
+      totalInputTokens = 0;
+      totalOutputTokens = 0;
+      totalCost = 0.0;
+      totalRequests = 0;
+      requestTimestamps.length = 0;
+      
+      // Clear DOM
+      tbody.innerHTML = '';
+      elTotalTokens.textContent = '0';
+      elInputTokens.textContent = '0';
+      elOutputTokens.textContent = '0';
+      elTotalCost.textContent = '$0.000';
+      elAvgCost.textContent = '$0.000';
+      elTotalRequests.textContent = '0';
+      
+      updateGauges();
+    });
+  }
+
+  // ==========================================
+  // Reset Data Button
+  // ==========================================
+  const btnResetData = document.getElementById('btn-reset-data');
+  if (btnResetData) {
+    btnResetData.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all telemetry history?')) {
+        fetch('/api/telemetry', { method: 'DELETE' })
+          .catch(err => console.error('Failed to clear telemetry:', err));
+      }
+    });
   }
 
   // ==========================================

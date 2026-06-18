@@ -84,6 +84,12 @@ app.get('/api/telemetry', (req, res) => {
   res.json(telemetryHistory);
 });
 
+app.delete('/api/telemetry', (req, res) => {
+  telemetryHistory.length = 0;
+  telemetryEmitter.emit('clear_telemetry', { status: 'cleared' });
+  res.json({ status: 'success', message: 'Telemetry history cleared' });
+});
+
 app.get('/api/telemetry/stream', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
