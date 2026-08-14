@@ -1,80 +1,95 @@
-# OmniGate AI 🌌
+# OmniGate AI 🌐
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![Node.js](https://img.shields.io/badge/Node.js-20+-43853D?logo=node.js&logoColor=white)
 
 **The Privacy-First LLM API Gateway for Developers & AI Agents**
 
-OmniGate AI is a self-hosted, local proxy server designed to sit between your code editors (like VS Code, Roo Code, Cline) and your LLM providers (OpenAI, DeepSeek, Anthropic). It intercepts API requests to securely inject your real API keys, count tokens, and calculate costs in real-time—all without your secret keys ever leaving your machine.
+OmniGate AI is a self-hosted, local proxy server that sits between your code editors (VS Code, Roo Code, Cline) and LLM providers (OpenAI, DeepSeek, Anthropic). It securely injects your real API keys, counts tokens, and calculates costs in real-time—all without your secret keys ever leaving your machine.
 
----
+## 🌟 Why This Exists
 
-## 🚀 Quick Start
+Developers and AI agents face a critical dilemma: **convenience vs. security**. Cloud-based proxies expose your API keys to third parties, while manual key management in every tool is a nightmare. OmniGate AI solves this by providing a **local, zero-trust gateway** that keeps your keys on your machine, gives you full visibility into token usage, and works with any OpenAI-compatible client.
 
-No complex installations required. If you have Node.js installed, simply run:
+## ✨ Key Features
+
+- **🔒 Privacy-First**: Your API keys never leave your machine. All requests are proxied locally.
+- **📊 Real-Time Token Tracking**: Monitor token usage and costs live via a beautiful glassmorphic dashboard.
+- **🔍 Full Audit Trail**: Log every API request with provider, model, and token counts—zero retention of prompts or completions.
+- **🚀 Instant Setup**: Run `npx omnigate-ai` and you're ready. No complex configuration.
+- **🔧 Dynamic Configuration**: Update API keys and endpoints on the fly via a REST API or config file.
+- **📡 SSE Streaming**: Real-time telemetry streaming for integration with your own monitoring tools.
+- **🐳 Docker Support**: Deploy with a single `docker-compose up` for containerized environments.
+- **🛡️ Zero-Auth Local Dashboard**: Access your dashboard at `http://localhost:8080/dashboard` without any authentication.
+
+## 🛠️ Tech Stack & Architecture
+
+OmniGate AI is built with **Node.js** and **Express**, designed to be lightweight and dependency-free. The architecture is simple yet powerful:
+
+```
+[Code Editor / AI Agent] → [OmniGate Proxy] → [LLM Provider]
+                              ↓
+                        [Dashboard & Telemetry]
+```
+
+- **Proxy Engine**: Intercepts API requests, injects your keys, and forwards to the provider.
+- **Telemetry Module**: Counts tokens and logs metadata asynchronously, ensuring zero impact on response time.
+- **Dashboard**: A sleek, glassmorphic UI built with vanilla JS and CSS, served directly from the server.
+- **Configuration**: Environment variables or a `config.json` file for dynamic updates.
+
+## 📦 Quickstart & Installation
+
+### Option 1: npx (Recommended)
 
 ```bash
 npx omnigate-ai
 ```
 
-This will instantly download and start the proxy server on port `8080`.
+This downloads and starts the proxy on port `8080`.
 
-## 💻 The Dashboard
+### Option 2: Docker
 
-Once the server is running, open your web browser and navigate to:
-**http://localhost:8080/dashboard**
-
-You will be greeted by a beautiful, glassmorphic UI where you can:
-1. **Secure Your Gateway:** Create a local "Gateway Secret Key" to lock down your proxy.
-2. **Add API Keys:** Securely store your real OpenAI or DeepSeek API keys locally.
-3. **Track Usage:** Watch real-time gauges spin as your tokens are consumed, showing you exact costs and RPM (Requests Per Minute).
-4. **Audit Logs:** View a live feed of every single request your AI tools are making behind the scenes.
-
-## 🛠️ Integrating with VS Code / AI Agents
-
-To route your AI coding assistant through OmniGate AI:
-
-1. Open your AI Tool's settings (e.g., Roo Code or Continue).
-2. Set the **Provider** to `OpenAI Compatible`.
-3. Set the **Base URL** to `http://localhost:8080/v1`.
-4. Set the **API Key** to your **Gateway Secret Key** (the one you created in the dashboard, *not* your real OpenAI key).
-
-Now, start coding! OmniGate AI will silently intercept the requests, inject your real API key, forward it to the provider, and track your tokens on the dashboard.
-
-## 🤖 Routing Your Custom AI Apps (Python & Node.js)
-
-Are you building your own AI apps? You can easily route them through OmniGate AI to track their token usage too! Just change the base URL in your official OpenAI SDK to point to your local proxy.
-
-**Python Example:**
-```python
-from openai import OpenAI
-
-client = OpenAI(
-    base_url="http://localhost:8080/v1", # Point to your proxy
-    api_key="your-gateway-secret-key"    # Use your local secret
-)
+```bash
+docker-compose up
 ```
 
-**Node.js Example:**
-```javascript
-import OpenAI from 'openai';
+### Option 3: Manual
 
-const openai = new OpenAI({
-    baseURL: "http://localhost:8080/v1", // Point to your proxy
-    apiKey: "your-gateway-secret-key"    // Use your local secret
-});
+```bash
+git clone https://github.com/erfanhassan/Omnigate.ai.git
+cd Omnigate.ai
+npm install
+npm start
 ```
 
-## ✨ Features
+### Configure Your Editor
 
-- **🔒 100% Local Privacy:** Your real API keys are saved locally. Cloud-based AI tools never see them.
-- **💸 Token & Cost Tracking:** Accurate token counting and real-time cost estimation for OpenAI and DeepSeek models.
-- **🛡️ Rate Limit Protection:** Monitor your RPM to prevent accidental massive API bills from rogue agents.
-- **📡 Live Audit Log:** Total transparency into what your automated agents are actually sending to the LLMs.
-- **⚡ Zero Configuration:** Starts instantly with a single `npx` command.
+Set your editor's API base URL to `http://localhost:8080` and use any dummy key. OmniGate will inject your real key automatically.
 
-## 🌐 Website
-Visit our [Landing Page](https://erfanhassan.github.io/Omnigate.ai) for more information.
+## 📊 Dashboard
+
+Open `http://localhost:8080/dashboard` in your browser to see:
+
+- Real-time token usage and cost per request
+- History of all API calls
+- Clear telemetry data with one click
+
+![Dashboard Screenshot](https://via.placeholder.com/800x400?text=OmniGate+AI+Dashboard)
+
+## 🤝 Contributing & Community
+
+We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) to get started. Whether it's bug fixes, feature requests, or documentation improvements, your help is appreciated.
+
+- **Issues**: Report bugs or request features via [GitHub Issues](https://github.com/erfanhassan/Omnigate.ai/issues).
+- **Discussions**: Join the conversation in [GitHub Discussions](https://github.com/erfanhassan/Omnigate.ai/discussions).
+- **Star**: If you find this useful, give us a ⭐ to show your support!
 
 ## 📄 License
-MIT License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**Made with ❤️ for the developer community**
