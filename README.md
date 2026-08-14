@@ -12,47 +12,56 @@ OmniGate AI is a self-hosted, local proxy server that sits between your code edi
 
 ## 🌟 Why This Exists
 
-Developers and AI agents face a critical dilemma: **convenience vs. security**. Cloud-based proxies expose your API keys to third parties, while manual key management in every tool is a nightmare. OmniGate AI solves this by providing a **local, zero-trust gateway** that keeps your keys on your machine while giving you full visibility into token usage and costs.
+Developers and AI agents face a critical dilemma: **convenience vs. security**. Cloud-based proxies expose your API keys to third parties, while manual key management in every tool is a nightmare. OmniGate AI solves this by giving you a **local, self-hosted gateway** that keeps your keys on your machine, provides **real-time token usage tracking**, and offers **full auditability**—all with zero cloud dependencies.
 
 ## ✨ Key Features
 
-- **🔒 Privacy-First**: Your API keys never leave your machine. All requests are proxied locally.
-- **📊 Real-Time Token Counting**: Track input/output tokens and costs per request, model, and project.
-- **🖥️ Live Dashboard**: A built-in web dashboard with real-time telemetry via SSE (Server-Sent Events).
-- **🔧 Multi-Provider Support**: Works with OpenAI, Anthropic, and any OpenAI-compatible endpoint (DeepSeek, etc.).
-- **📦 Zero-Config Setup**: Get started in minutes with npm or Docker.
-- **📈 Cost Tracking**: Calculate costs per request and aggregate usage for budgeting.
-- **🛡️ Zero-Retention Logging**: Prompts and completions are never stored—only metadata counts.
-- **🔌 Easy Integration**: Compatible with VS Code extensions like Roo Code and Cline.
+- **🔒 Privacy-First Architecture**: Your API keys never leave your machine. All requests are proxied locally.
+- **📊 Real-Time Token Counting**: Track input and output tokens for every request, with cost calculation.
+- **🖥️ Live Dashboard**: A built-in web dashboard shows telemetry in real-time, with SSE streaming.
+- **🔧 Multi-Provider Support**: Works with OpenAI, Anthropic, and any OpenAI-compatible endpoint.
+- **📦 Zero-Config Setup**: Run with Docker or Node.js—no complex configuration required.
+- **📈 Telemetry API**: Export usage data to your own logging or analytics systems.
+- **🛡️ Zero-Retention Policy**: Prompts and completions are never stored—only counts are kept.
 
 ## 🛠️ Tech Stack & Architecture
 
-- **Node.js** (>=20) with Express
-- **Docker** for containerized deployment
-- **Server-Sent Events** for real-time telemetry streaming
-- **REST API** for configuration and telemetry retrieval
+OmniGate AI is built with a simple, modular architecture:
+
+- **Node.js + Express**: Lightweight server handling proxy and API routes.
+- **Docker**: Containerized deployment for easy scaling and isolation.
+- **EventEmitter**: Real-time telemetry streaming to the dashboard.
+- **Static Dashboard**: Vanilla HTML/CSS/JS for zero-dependency UI.
 
 ```
-[VS Code / AI Agent] → [OmniGate AI Proxy] → [OpenAI / Anthropic / etc.]
-                         |
-                         ├─ Dashboard (localhost:8080/dashboard)
-                         ├─ Telemetry API (localhost:8080/api/telemetry)
-                         └─ Config API (localhost:8080/api/config)
+[Your Code Editor] → [OmniGate AI Proxy] → [LLM Provider]
+                          |
+                          ├── Token Counter
+                          ├── Cost Calculator
+                          └── Telemetry Dashboard
 ```
 
 ## 📦 Quickstart & Installation
 
-### Option 1: Run with Node.js
+### Option 1: Docker (Recommended)
 
 ```bash
-# Clone the repository
+git clone https://github.com/erfanhassan/Omnigate.ai.git
+cd Omnigate.ai
+docker-compose up -d
+```
+
+### Option 2: Node.js
+
+```bash
+# Clone the repo
 git clone https://github.com/erfanhassan/Omnigate.ai.git
 cd Omnigate.ai
 
 # Install dependencies
 npm install
 
-# Set your API keys (optional, can also be configured via dashboard)
+# Set your API keys (optional, can be done via config.json)
 export OPENAI_API_KEY=your-key
 export ANTHROPIC_API_KEY=your-key
 
@@ -60,39 +69,22 @@ export ANTHROPIC_API_KEY=your-key
 npm start
 ```
 
-### Option 2: Run with Docker
+### Configure Your Editor
 
-```bash
-docker build -t omnigate-ai .
-docker run -p 8080:8080 -e OPENAI_API_KEY=your-key omnigate-ai
-```
-
-Or use docker-compose:
-
-```bash
-docker-compose up
-```
-
-### Configure Your AI Tools
-
-Point your AI tool (e.g., Roo Code) to `http://localhost:8080` as the API base URL. OmniGate will inject the correct API key and forward requests to the appropriate provider.
+Point your AI editor (e.g., Roo Code, Cline) to `http://localhost:8080` as the API base URL. OmniGate will inject your keys and track usage automatically.
 
 ## 📸 Screenshots
 
-*Dashboard preview coming soon. Stay tuned!*
+> Add screenshots here to showcase the dashboard and proxy in action.
 
 ## 🤝 Contributing & Community
 
-We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) to get started.
-
-- **Report Issues**: [GitHub Issues](https://github.com/erfanhassan/Omnigate.ai/issues)
-- **Submit PRs**: Fork the repo and create a pull request.
-- **Join the Discussion**: Use GitHub Discussions for questions and ideas.
+We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) to get started. Whether it's bug fixes, feature requests, or documentation improvements, your help is appreciated.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License—see the [LICENSE](LICENSE) file for details.
 
 ---
 
-**Star ⭐ this repo** if you find it useful! Your support helps us grow and improve.
+**Star this repo** ⭐ if you find it useful! Share it with your fellow developers and AI enthusiasts.
